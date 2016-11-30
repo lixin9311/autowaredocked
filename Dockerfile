@@ -45,6 +45,18 @@ RUN apt-get install -y --no-install-recommends libnlopt-dev freeglut3-dev qtbase
   libqt5opengl5-dev libssh2-1-dev libarmadillo-dev libpcap-dev\
   gksu mesa-common-dev libgl1-mesa-dev
 
+# OpenCV
+RUN echo "deb http://jp.archive.ubuntu.com/ubuntu trusty main multiverse" >> /etc/apt/sources.list
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  libopencv-dev build-essential cmake git \
+  libgtk2.0-dev pkg-config python-dev python-numpy libdc1394-22 \
+  libdc1394-22-dev libjpeg-dev libpng12-dev libtiff4-dev libjasper-dev \
+  libavcodec-dev libavformat-dev libswscale-dev libxine-dev \
+  libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev \
+  libtbb-dev libqt4-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev \
+  libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev \
+  x264 v4l-utils unzip wget
+
 # Make SSH available
 EXPOSE 22
 
@@ -63,5 +75,18 @@ USER "${user}"
 # This is required for sharing Xauthority
 ENV QT_X11_NO_MITSHM=1
 ENV CATKIN_TOPLEVEL_WS="${workspace}/devel"
+
+# Download and build OpenCV
+RUN sudo mkdir "/opt/OpenCV" && sudo chown "${user}" "/opt/OpenCV"
+RUN wget -O "/opt/OpenCV/opencv-2.4.13.zip" https://github.com/opencv/opencv/archive/2.4.13.zip
+RUN cd "/opt/OpenCV/" && unzip "/opt/OpenCV/opencv-2.4.13.zip"
+#RUN sudo ln -s "/usr/local/nvidia/lib64/libnvcuvid.so.1" "/usr/lib/libnvcuvid.so"
+RUN echo "there is an issue with nvidia-docker, please build opencv and autoware on you own after docker build"
+
+# Autoware
+RUN sudo mkdir "/opt/Autoware" && sudo chown "${user}" "/opt/Autoware"
+RUN git clone https://github.com/CPFL/Autoware.git "/opt/Autoware"
+
 # Switch to the workspace
 WORKDIR ${workspace}
+
