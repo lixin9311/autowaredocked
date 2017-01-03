@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "building opencv......"
-cd "/opt/OpenCV/opencv-2.4.13" && \
+cd "/opt/OpenCV/opencv-2.4.13"
 mkdir build && cd build && \
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
   -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON \
@@ -10,8 +10,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
   -D CUDA_GENERATION=Auto -D WITH_NVCUVID=ON \
   -D WITH_CUBLAS=ON -D WITH_CUDA=ON -D WITH_NVCUVID=ON \
   -D CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda/ \
-  -D CUDA_CUDA_LIBRARY=/usr/local/nvidia/lib64/libcuda.so .. && \
-#  -D CUDA_TOOLKIT_ROOT_DIR=/usr/local/nvidia/ ..
+  -D CUDA_CUDA_LIBRARY=/usr/local/nvidia/lib64/libcuda.so ..
 make -j$(nproc)
 sudo make install
 sudo ldconfig
