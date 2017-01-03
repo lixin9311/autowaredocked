@@ -43,7 +43,7 @@ RUN pip install catkin_tools
 # Autoware
 RUN apt-get install -y --no-install-recommends libnlopt-dev freeglut3-dev qtbase5-dev\
   libqt5opengl5-dev libssh2-1-dev libarmadillo-dev libpcap-dev\
-  gksu mesa-common-dev libgl1-mesa-dev
+  gksu mesa-common-dev libgl1-mesa-dev libglew-dev
 
 # OpenCV
 RUN echo "deb http://jp.archive.ubuntu.com/ubuntu trusty main multiverse" >> /etc/apt/sources.list
